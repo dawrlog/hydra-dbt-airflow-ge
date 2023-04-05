@@ -54,10 +54,6 @@ models:
     tests:
         - not_null
   - name: gh_login
-    description: "Surrogate key of the fact table."
-    tests:
-        - not_null
-  - name: gh_login
     description: "Username used to close the GitHub issue."
     tests:
         - not_null
