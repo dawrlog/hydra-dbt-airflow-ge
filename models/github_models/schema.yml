@@ -1,0 +1,41 @@
+
+version: 2
+
+models:
+- name: stg_github_events
+  description: "DBT Model of staging table for github events."
+  tests:
+  - name: id
+    description: "Surrogate key of the fact table."
+    tests:
+        - not_null
+        
+- name: fct_gh_cmt
+  description: "DBT Model of closed github commits."
+  tests:
+  - dbt_expectations.expect_compound_columns_to_be_unique:
+      column_list: ["surr_key", "gh_login", "gh_action", "closed_amt", "last_closed_dt"]
+  columns:
+  - name: surr_key
+    description: "Surrogate key of the fact table."
+    tests:
+        - unique
+        - not_null
+  - name: gh_login
+    description: "Username used to close the GitHub issue."
+    tests:
+    - dbt_expectations.expect_column_values_to_have_consistent_casing:
+        display_inconsistent_columns: true # (Optional)
+  - name: gh_action
+    description: "Description of the actions related to the user."
+    tests:
+    - dbt_expectations.expect_column_values_to_have_consistent_casing:
+        display_inconsistent_columns: true # (Optional)
+  - name: closed_amt
+    description: "Amount of closed github issues by the informed Username."
+    tests:
+    - not_null
+  - name: last_closed_dt
+    description: "Lastest closed github issue by the informed Username."
+    tests:
+    - not_null
