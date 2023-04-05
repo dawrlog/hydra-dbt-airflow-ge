@@ -6,10 +6,97 @@ models:
   description: "DBT Model of staging table for github events."
   columns:
     - name: id
-      description: "Surrogate key of the fact table."
+      description: "Id of source table."
       tests:
-          - unique
           - not_null        
+    - name: payload_action
+      description: "Login used."
+      tests:
+          - not_null
+    - name: payload_pull_request_merged_by_login
+      description: "Login used."
+      tests:
+          - not_null
+    - name: payload_pull_request_milestone_closed_at
+      description: "Last commit date."
+      tests:
+          - not_null
+
+
+- name: dim_gh_closed_actions
+  description: "DBT Dimension Model of closed github commits."
+  columns:
+  - name: gh_login
+    description: "Surrogate key of the fact table."
+    tests:
+        - not_null
+  - name: gh_login
+    description: "Username used to close the GitHub issue."
+    tests:
+    - dbt_expectations.expect_column_values_to_have_consistent_casing:
+        display_inconsistent_columns: true # (Optional)
+  - name: gh_action
+    description: "Description of the actions related to the user."
+    tests:
+    - dbt_expectations.expect_column_values_to_have_consistent_casing:
+        display_inconsistent_columns: true # (Optional)
+  - name: gh_closed_at
+    description: "Amount of closed github issues by the informed Username."
+    tests:
+    - not_null
+  - name: dim_load_dt
+    description: "Lastest closed github issue by the informed Username."
+    tests:
+    - not_null
+ 
+- name: fct_gh_closed_amt
+  description: "DBT Dimension Model of amount of closed github commits."
+  columns:
+  - name: surr_key
+    description: "Surrogate key of the fact table."
+    tests:
+        - not_null
+  - name: gh_login
+    description: "Surrogate key of the fact table."
+    tests:
+        - not_null
+  - name: gh_login
+    description: "Username used to close the GitHub issue."
+    tests:
+        - not_null
+  - name: closed_amt
+    description: "Amount of closed github issues by the informed Username."
+    tests:
+    - not_null
+  - name: fct_load_dt
+    description: "Lastest closed github issue by the informed Username."
+    tests:
+    - not_null
+ 
+- name: fct_gh_closed_lst
+  description: "DBT Dimension Model of latest closed github commits."
+  columns:
+  - name: surr_key
+    description: "Surrogate key of the fact table."
+    tests:
+        - not_null
+  - name: gh_login
+    description: "Surrogate key of the fact table."
+    tests:
+        - not_null
+  - name: gh_login
+    description: "Username used to close the GitHub issue."
+    tests:
+        - not_null
+  - name: last_closed_dt
+    description: "Date of latest closed github issues by the informed Username."
+    tests:
+    - not_null
+  - name: fct_load_dt
+    description: "Lastest closed github issue by the informed Username."
+    tests:
+    - not_null
+
 - name: fct_gh_cmt
   description: "DBT Model of closed github commits."
   tests:
