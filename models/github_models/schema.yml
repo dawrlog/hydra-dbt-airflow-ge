@@ -4,12 +4,12 @@ version: 2
 models:
 - name: stg_github_events
   description: "DBT Model of staging table for github events."
-  tests:
-  - name: id
-    description: "Surrogate key of the fact table."
-    tests:
-        - not_null
-        
+  columns:
+    - name: id
+      description: "Surrogate key of the fact table."
+      tests:
+          - unique
+          - not_null        
 - name: fct_gh_cmt
   description: "DBT Model of closed github commits."
   tests:
