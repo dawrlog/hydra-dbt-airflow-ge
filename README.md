@@ -1,4 +1,4 @@
-# Hydra Demo using Airflow and DBT Cloud with  Great Expectations
+# Demo lab on Hydra database using Airflow and DBT Cloud with  Great Expectations
 Local lab to run Airflow interacting with DBT Cloud to run on Hydra clusters.
 
 The example below is to create a local Airflow cluster on Kubernetes which will interact with your DBT Cloud environment. The airflow component should be detached from this repository into your Github infrastructure one.
