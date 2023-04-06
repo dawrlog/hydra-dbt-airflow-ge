@@ -3,3 +3,4 @@ notes
 target/
 dbt_packages/
 logs/
+traefik_ingress.yml

@@ -33,46 +33,75 @@ with DAG(
     start = DummyOperator(task_id="start")
     end = DummyOperator(task_id="end")
 
-    run_load_model = DbtCloudRunJobOperator(
-        task_id="run_load_model",
-        job_id=259701,
+    run_load_stg_gh_events_model = DbtCloudRunJobOperator(
+        task_id="run_load_stg_gh_events",
+        job_id=262905,
         check_interval=10,
         timeout=300,
     )
 
+
     test_stg_github_events = DbtCloudRunJobOperator(
         task_id="test_stg_github_events",
-        job_id=262089,
+        job_id=262922,
+        check_interval=10,
+        timeout=300,
+    )
+
+    run_load_dim_gh_closed_actions = DbtCloudRunJobOperator(
+        task_id="run_load_dim_gh_closed_actions",
+        job_id=262919,
         check_interval=10,
         timeout=300,
     )
 
     test_dim_gh_closed_actions = DbtCloudRunJobOperator(
         task_id="test_dim_gh_closed_actions",
-        job_id=262104,
+        job_id=262924,
+        check_interval=10,
+        timeout=300,
+    )
+
+    run_fct_gh_closed_amt = DbtCloudRunJobOperator(
+        task_id="run_fct_gh_closed_amt",
+        job_id=262925,
         check_interval=10,
         timeout=300,
     )
 
     test_fct_gh_closed_amt = DbtCloudRunJobOperator(
         task_id="test_fct_gh_closed_amt",
-        job_id=262106,
+        job_id=262926,
+        check_interval=10,
+        timeout=300,
+    )
+
+    run_fct_gh_closed_lst = DbtCloudRunJobOperator(
+        task_id="run_fct_gh_closed_lst",
+        job_id=262927,
         check_interval=10,
         timeout=300,
     )
 
     test_fct_gh_closed_lst = DbtCloudRunJobOperator(
         task_id="test_fct_gh_closed_lst",
-        job_id=262110,
+        job_id=262928,
+        check_interval=10,
+        timeout=300,
+    )
+
+    run_fct_gh_cmt = DbtCloudRunJobOperator(
+        task_id="run_fct_gh_cmt",
+        job_id=262929,
         check_interval=10,
         timeout=300,
     )
 
     test_fct_gh_cmt = DbtCloudRunJobOperator(
         task_id="test_fct_gh_cmt",
-        job_id=259721,
+        job_id=262932,
         check_interval=10,
         timeout=300,
     )
 
-    start >> run_load_model >> test_stg_github_events >> test_dim_gh_closed_actions >> test_fct_gh_closed_amt >> test_fct_gh_closed_lst >> test_fct_gh_cmt >> end
+    start >> run_load_stg_gh_events_model >> test_stg_github_events >> run_load_dim_gh_closed_actions >> test_dim_gh_closed_actions >> run_fct_gh_closed_amt >> test_fct_gh_closed_amt >> run_fct_gh_closed_lst >> test_fct_gh_closed_lst >> run_fct_gh_cmt >> test_fct_gh_cmt >> end
