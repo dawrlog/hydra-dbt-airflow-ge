@@ -20,6 +20,8 @@ This is done while configuring a new project on DBT Cloud, when a github integra
 
 ![](./img/gh_dbt_integration.png)
 
+Below is a DBT Example of a successful integrated project.
+
 
 # The following are required to proceed:
 ## Install Kind
